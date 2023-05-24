@@ -39,8 +39,8 @@ class Stack(list):
     def is_empty(self) -> bool:
         return len(self.cards) == 0
 
-    def remove_pair(self, pile) -> bool:
-        """Remove a pair from the player's hand to the pile. Return True if successful."""
+    def discard_pair(self, pile) -> bool:
+        """Discard a pair from the player's hand to the pile. Return True if successful."""
         success = False
 
         # Check for each rank if there is more than one card in the player's hand.
@@ -49,13 +49,14 @@ class Stack(list):
 
             for card in self.cards:
                 if card[1:] == rank:
-                    pair += card
+                    pair.append(card)
 
                 # Move the pair to the pile
                 if len(pair) >= 2:
                     self.move(pair[0], pile)
-                    self.move(pair[0], pile)
+                    self.move(pair[1], pile)
                     success = True
+                    break
 
         return success
 

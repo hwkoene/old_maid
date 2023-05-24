@@ -6,9 +6,9 @@ this game, but I could also use them to make other card games.
 
 A card game has concepts like cards, players, hands, rounds.
 
-A card can be a tuple of rank and suit or a class. I'll make a deck class
+A card can be a tuple of rank and suit or a class. I'll make a stack class
 and simulate cards as tuples.
-    - I changed this to use ASCII characters for the suits. A card is now a string of two characters.
+    - I changed this to use ASCII characters for the suits. A card is now a string.
 
 Game classes usually have a 'run()' with a main loop when everything
 is initialised.
@@ -16,5 +16,3 @@ is initialised.
 I realised every game comes down to moving cards between stacks. It always starts
 with one stack being the main deck. The players have hands and there can
 be a discard pile. Even cards not in the game are on a stack.
-
-I could have the Stack class inherit from list

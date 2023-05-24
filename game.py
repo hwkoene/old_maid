@@ -62,6 +62,32 @@ class Game:
                 print(c, end='\t')
 
             print()
+        print()
 
+    def run(self):
+        finished = False
 
+        # Deal all the cards
+        self.deal(52)
+
+        # Every player discards their pairs
+        for player in self.players:
+            while player.discard_pair(self.discard_pile):
+                continue
+
+        self.show_state()
         
+        while not finished:
+            # Simulate a round
+            for i, player in enumerate(self.players):
+                player.pick(self.players[i-1])
+
+                self.show_state()
+
+                # Stop if a player can't discard a pair
+                if not player.discard_pair(self.discard_pile):
+                    print("Player %d lost!" % i)
+                    finished = True
+                    break
+
+        self.reset()
