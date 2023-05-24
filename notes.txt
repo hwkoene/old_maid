@@ -1,5 +1,5 @@
 My aim will be to make the simulation in such a way that
-the functions will closely resemble the steps of the real game.
+the functions will closely resemble the steps in a real game.
 
 I would like to make generic functions for cards which I can use to program
 this game, but I could also use them to make other card games.
@@ -16,3 +16,9 @@ is initialised.
 I realised every game comes down to moving cards between stacks. It always starts
 with one stack being the main deck. The players have hands and there can
 be a discard pile. Even cards not in the game are on a stack.
+
+The rules didn't describe what happens when one should draw from a player with no cards.
+I decided to just skip the player.
+
+The Stack.pick() function includes rudimentary functionality because I expected
+to implement more user interaction.

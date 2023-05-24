@@ -4,7 +4,6 @@ from stack import Stack
 class Game:
     """
     Old Maid game class. The queen of clubs is removed. Amount of players is prompted.
-    
     The player can choose a card to draw to simulate reality.
     """
 
@@ -35,9 +34,7 @@ class Game:
         return response
 
     def deal(self, amount : int = None) -> None:
-        """
-        Deal the specified amount cards to players or until the pile is emtpy.
-        """
+        """Deal the specified amount cards to players or until the pile is emtpy."""
 
         self.draw_deck.shuffle()
 
@@ -48,23 +45,31 @@ class Game:
                 else:
                     player.pick(self.draw_deck)
 
-    def reset(self):
+    def reset(self) -> None:
         """Move all the cards to the draw deck."""
         for player in self.players:
             while not player.is_empty():
                 self.draw_deck.pick(player)
 
     def show_state(self):
-        """Show the hand of each player."""
+        """
+        Show the hand of each player.
+        Example:    Player 0: ♡K    ♣10     ♠Q      ♣6
+                    Player 1: ♡10   ♢8      ♢K      ♢6      ♡8
+        """
         for i, player in enumerate(self.players):
             print("Player %d: " % i, end='')
             for c in player.cards:
                 print(c, end='\t')
 
             print()
-        print()
 
-    def run(self):
+    def game_ended(self) -> None:
+        """Checks if the game is finished."""
+        return sum([len(player.cards) for player in self.players]) == 1
+
+    def run(self) -> None:
+        """A round is started with the specified amount of players."""
         finished = False
 
         # Deal all the cards
@@ -74,20 +79,27 @@ class Game:
         for player in self.players:
             while player.discard_pair(self.discard_pile):
                 continue
-
-        self.show_state()
         
-        while not finished:
-            # Simulate a round
+        print("Game started. Press enter to go to the next round.")
+        
+        while not finished:    
+            # Simulate a round until the end state is reached where one player has a queen
             for i, player in enumerate(self.players):
                 player.pick(self.players[i-1])
 
                 self.show_state()
 
-                # Stop if a player can't discard a pair
-                if not player.discard_pair(self.discard_pile):
-                    print("Player %d lost!" % i)
+                player.discard_pair(self.discard_pile)
+
+                # End state is reached
+                if self.game_ended():
+                    # Show final hands and terminate
+                    print()
+                    self.show_state()
+                    print("Game ended.")
                     finished = True
                     break
+                    
+                input()
 
         self.reset()

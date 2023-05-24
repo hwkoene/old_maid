@@ -29,12 +29,15 @@ class Stack(list):
 
     def pick(self, other_stack, index : int = None) -> None:
         """Pick a card from a stack (at index if provided)."""
-        if index:
-            card = other_stack.cards[index]
-        else:
-            card = random.choice(other_stack.cards)
+        try:
+            if index:
+                card = other_stack.cards[index]
+            else:
+                card = random.choice(other_stack.cards)
 
-        other_stack.move(card, self)
+            other_stack.move(card, self)
+        except:
+            pass
 
     def is_empty(self) -> bool:
         return len(self.cards) == 0
